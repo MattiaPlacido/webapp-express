@@ -7,6 +7,9 @@ const app = express();
 const movieRouter = require("./router/movieRouter");
 app.use("/", movieRouter);
 
+//middlewares
+app.use("/public", express.static("public"));
+
 //ASCOLTO
 const port = 3000;
 app.listen(port, () => {

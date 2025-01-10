@@ -6,7 +6,20 @@ function index(req, res) {
 
   connection.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: "Database query failed" });
-    res.json(results);
+
+    //creo un array contenente le immagini associate ai risultati
+    const updatedResults = results.map((movie) => {
+      //formatto il titolo per essere tutto in minuscolo e avere underscore al posto degli spazi
+      const imagePath = `../public/${movie.title
+        .toLowerCase()
+        .replace(/ /, "_")}.jpg`;
+      return {
+        ...movie,
+        image: imagePath,
+      };
+    });
+
+    res.json(updatedResults);
     console.log("Index eseguito con successo!");
   });
 }
@@ -24,16 +37,19 @@ function show(req, res) {
         return res.status(404).json({ error: "Post not found" });
       }
 
-      const movies = results[0];
+      const movie = results[0];
+      movie.image = `../public/${movie.title
+        .toLowerCase()
+        .replace(/ /, "_")}.jpg`;
 
       const reviewsSql =
         "SELECT * FROM reviews JOIN movies ON movies.id = reviews.movie_id WHERE movies.id = ?";
 
       connection.query(reviewsSql, [id], (err, reviewsResults) => {
-        movies.reviews = reviewsResults;
+        movie.reviews = reviewsResults;
 
-        res.json(movies);
-        console.log("Show eseguito con successo: ", movies);
+        res.json(movie);
+        console.log("Show eseguito con successo: ", movie);
       });
     });
   } else {
