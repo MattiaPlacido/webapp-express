@@ -43,7 +43,7 @@ function show(req, res) {
         .replace(/ /, "_")}.jpg`;
 
       const reviewsSql =
-        "SELECT * FROM reviews JOIN movies ON movies.id = reviews.movie_id WHERE movies.id = ?";
+        "SELECT reviews.name,reviews.vote,reviews.text FROM reviews JOIN movies ON movies.id = reviews.movie_id WHERE movies.id = ?";
 
       connection.query(reviewsSql, [id], (err, reviewsResults) => {
         movie.reviews = reviewsResults;
@@ -58,5 +58,7 @@ function show(req, res) {
     throw err;
   }
 }
+
+
 
 module.exports = { index, show };

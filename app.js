@@ -5,7 +5,7 @@ const app = express();
 
 //ROUTING
 const movieRouter = require("./router/movieRouter");
-app.use("/", movieRouter);
+app.use("/movies", movieRouter);
 
 //.env files
 require("dotenv").config();
