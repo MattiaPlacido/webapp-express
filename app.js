@@ -3,19 +3,26 @@ const express = require("express");
 
 const app = express();
 
-//routing
+//ROUTING
 const movieRouter = require("./router/movieRouter");
 app.use("/", movieRouter);
 
-//middlewares
+//.env files
+require("dotenv").config();
+
+//MIDDLEWARES
 app.use("/public", express.static("public"));
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
+//pagina non trovata / indirizzo non trovato
 app.use(notFound);
+//gestione degli errori
 app.use(errorHandler);
+//body parser
+app.use(express.json());
 
 //ASCOLTO
-const port = 3000;
+const port = process.env.APP_PORT;
 app.listen(port, () => {
   console.log("Il server sta ascoltando sulla porta " + port);
 });
