@@ -42,3 +42,5 @@ function show(req, res) {
     throw err;
   }
 }
+
+module.exports = { index, show };
