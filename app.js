@@ -9,6 +9,10 @@ app.use("/", movieRouter);
 
 //middlewares
 app.use("/public", express.static("public"));
+const notFound = require("./middlewares/notFound");
+const errorHandler = require("./middlewares/errorHandler");
+app.use(notFound);
+app.use(errorHandler);
 
 //ASCOLTO
 const port = 3000;
