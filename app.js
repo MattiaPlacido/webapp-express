@@ -2,6 +2,8 @@
 const express = require("express");
 
 const app = express();
+var cors = require("cors");
+app.use(cors());
 
 //ROUTING
 const movieRouter = require("./router/movieRouter");
@@ -14,8 +16,6 @@ require("dotenv").config();
 app.use("/public", express.static("public"));
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
-var cors = require("cors");
-app.use(cors());
 //pagina non trovata / indirizzo non trovato
 app.use(notFound);
 //gestione degli errori
