@@ -10,9 +10,7 @@ function index(req, res) {
     //creo un array contenente le immagini associate ai risultati
     const updatedResults = results.map((movie) => {
       //formatto il titolo per essere tutto in minuscolo e avere underscore al posto degli spazi
-      const imagePath = `../public/${movie.title
-        .toLowerCase()
-        .replace(/ /, "_")}.jpg`;
+      const imagePath = `/${movie.title.toLowerCase().replace(/ /, "_")}.jpg`;
       return {
         ...movie,
         image: imagePath,
@@ -38,9 +36,7 @@ function show(req, res) {
       }
 
       const movie = results[0];
-      movie.image = `../public/${movie.title
-        .toLowerCase()
-        .replace(/ /, "_")}.jpg`;
+      movie.image = `/${movie.title.toLowerCase().replace(/ /, "_")}.jpg`;
 
       const reviewsSql =
         "SELECT reviews.name,reviews.vote,reviews.text FROM reviews JOIN movies ON movies.id = reviews.movie_id WHERE movies.id = ?";
@@ -49,7 +45,7 @@ function show(req, res) {
         movie.reviews = reviewsResults;
 
         res.json(movie);
-        console.log("Show eseguito con successo: ", movie);
+        console.log("Show eseguito con successo: ");
       });
     });
   } else {
@@ -58,7 +54,5 @@ function show(req, res) {
     throw err;
   }
 }
-
-
 
 module.exports = { index, show };
