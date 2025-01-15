@@ -22,6 +22,7 @@ function index(req, res) {
   });
 }
 
+//show
 function show(req, res) {
   const id = req.params.id;
 
@@ -55,4 +56,32 @@ function show(req, res) {
   }
 }
 
-module.exports = { index, show };
+//store || add-review
+function store(req, res) {
+  const id = req.params.id;
+
+  const { name, vote, text } = req.body;
+
+  if (!name || !vote || !text || !id) {
+    const err = new Error("Missing parameters");
+    err.code = 400;
+    throw err;
+  }
+
+  if (vote < 1 || vote > 5) {
+    const err = new Error("Vote must be between 1 and 5.");
+    err.code = 400;
+    throw err;
+  }
+
+  const sql =
+    "INSERT INTO reviews (movie_id, name, vote, text)VALUES (?,?,?,?)";
+
+  connection.query(sql, [id, name, vote, text], (err, results) => {
+    if (err) return res.status(500).json({ error: "Database query failed" });
+    res.json(results);
+    console.log("Review added successfully!");
+  });
+}
+
+module.exports = { index, show, store };

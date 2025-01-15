@@ -5,10 +5,12 @@ const app = express();
 var cors = require("cors");
 app.use(cors());
 
+//body parser
+app.use(express.json());
+
 //ROUTING
 const movieRouter = require("./router/movieRouter");
 app.use("/movies", movieRouter);
-
 //.env files
 require("dotenv").config();
 
@@ -20,8 +22,6 @@ const errorHandler = require("./middlewares/errorHandler");
 app.use(notFound);
 //gestione degli errori
 app.use(errorHandler);
-//body parser
-app.use(express.json());
 
 //ASCOLTO
 const port = process.env.APP_PORT;
