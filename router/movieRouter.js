@@ -10,6 +10,6 @@ router.get("/", movieController.index);
 
 router.get("/:id", movieController.show);
 
-router.post("/addreview:id", movieController.store);
+router.post("/:id/addreview", movieController.store);
 
 module.exports = router;

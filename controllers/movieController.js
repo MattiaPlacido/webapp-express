@@ -68,8 +68,8 @@ function store(req, res) {
     throw err;
   }
 
-  if (vote < 1 || vote > 5) {
-    const err = new Error("Vote must be between 1 and 5.");
+  if (isNaN(vote) || vote < 1 || vote > 5) {
+    const err = new Error("Vote must be a number between 1 and 5.");
     err.code = 400;
     throw err;
   }
